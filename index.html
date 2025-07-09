@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Code Playground</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: white;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.2em;
+        }
+
+        .playground {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .editor-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            background: #f0f0f0;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px 5px 0 0;
+            margin-right: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            background: #007acc;
+            color: white;
+        }
+
+        .tab:hover {
+            background: #e0e0e0;
+        }
+
+        .tab.active:hover {
+            background: #0066aa;
+        }
+
+        .editor {
+            flex: 1;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 0 5px 5px 5px;
+            resize: none;
+            outline: none;
+            background: #f9f9f9;
+            transition: border-color 0.3s ease;
+        }
+
+        .editor:focus {
+            border-color: #007acc;
+        }
+
+        .output-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .output-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .run-btn {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .run-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .output {
+            flex: 1;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            background: white;
+            min-height: 400px;
+        }
+
+        .console {
+            margin-top: 10px;
+            padding: 10px;
+            background: #1a1a1a;
+            color: #00ff00;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .clear-btn {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        .clear-btn:hover {
+            background: #cc0000;
+        }
+
+        @media (max-width: 768px) {
+            .playground {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 My Code Playground</h1>
+            <p class="subtitle">Experiment with HTML, CSS, and JavaScript</p>
+        </header>
+
+        <div class="playground">
+            <div class="editor-section">
+                <div class="tabs">
+                    <button class="tab active" onclick="switchTab('html')">HTML</button>
+                    <button class="tab" onclick="switchTab('css')">CSS</button>
+                    <button class="tab" onclick="switchTab('js')">JavaScript</button>
+                </div>
+                
+                <textarea id="html-editor" class="editor" placeholder="Write your HTML here...">
+<h1>Hello World!</h1>
+<p>Welcome to my playground!</p>
+<button onclick="changeColor()">Change Color</button>
+<div id="demo">This text will change color</div>
+                </textarea>
+
+                <textarea id="css-editor" class="editor hidden" placeholder="Write your CSS here...">
+h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 18px;
+    color: #666;
+    text-align: center;
+}
+
+button {
+    background: #007acc;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+}
+
+button:hover {
+    background: #0066aa;
+}
+
+#demo {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: color 0.3s ease;
+}
+                </textarea>
+
+                <textarea id="js-editor" class="editor hidden" placeholder="Write your JavaScript here...">
+function changeColor() {
+    const demo = document.getElementById('demo');
+    const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f39c12', '#e74c3c'];
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    demo.style.color = randomColor;
+    
+    console.log('Color changed to:', randomColor);
+}
+
+// Welcome message
+console.log('Welcome to the playground! 🎮');
+                </textarea>
+            </div>
+
+            <div class="output-section">
+                <div class="output-header">
+                    <span class="output-title">Output</span>
+                    <div>
+                        <button class="run-btn" onclick="runCode()">▶ Run Code</button>
+                        <button class="clear-btn" onclick="clearConsole()">Clear Console</button>
+                    </div>
+                </div>
+                <iframe id="output" class="output" src="about:blank"></iframe>
+                <div class="console" id="console">
+                    <div>Console output will appear here...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let activeTab = 'html';
+
+        function switchTab(tab) {
+            // Hide all editors
+            document.getElementById('html-editor').classList.add('hidden');
+            document.getElementById('css-editor').classList.add('hidden');
+            document.getElementById('js-editor').classList.add('hidden');
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            
+            // Show selected editor and activate tab
+            document.getElementById(tab + '-editor').classList.remove('hidden');
+            document.querySelector(`[onclick="switchTab('${tab}')"]`).classList.add('active');
+            
+            activeTab = tab;
+        }
+
+        function runCode() {
+            const html = document.getElementById('html-editor').value;
+            const css = document.getElementById('css-editor').value;
+            const js = document.getElementById('js-editor').value;
+            
+            const output = document.getElementById('output');
+            
+            // Create the complete HTML document
+            const fullCode = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <style>${css}</style>
+                </head>
+                <body>
+                    ${html}
+                    <script>
+                        // Override console.log to send messages to parent
+                        const originalLog = console.log;
+                        console.log = function(...args) {
+                            originalLog.apply(console, args);
+                            parent.postMessage({
+                                type: 'console',
+                                message: args.join(' ')
+                            }, '*');
+                        };
+                        
+                        try {
+                            ${js}
+                        } catch (error) {
+                            parent.postMessage({
+                                type: 'error',
+                                message: error.toString()
+                            }, '*');
+                        }
+                    </script>
+                </body>
+                </html>
+            `;
+            
+            // Update iframe content
+            output.srcdoc = fullCode;
+        }
+
+        function clearConsole() {
+            document.getElementById('console').innerHTML = '<div>Console cleared...</div>';
+        }
+
+        // Listen for messages from iframe
+        window.addEventListener('message', function(event) {
+            if (event.data.type === 'console') {
+                addToConsole(event.data.message);
+            } else if (event.data.type === 'error') {
+                addToConsole('Error: ' + event.data.message, 'error');
+            }
+        });
+
+        function addToConsole(message, type = 'log') {
+            const console = document.getElementById('console');
+            const div = document.createElement('div');
+            div.textContent = '> ' + message;
+            if (type === 'error') {
+                div.style.color = '#ff4444';
+            }
+            console.appendChild(div);
+            console.scrollTop = console.scrollHeight;
+        }
+
+        // Auto-run code on page load
+        window.addEventListener('load', function() {
+            runCode();
+        });
+
+        // Auto-run code when typing (with debounce)
+        let timeout;
+        document.querySelectorAll('.editor').forEach(editor => {
+            editor.addEventListener('input', function() {
+                clearTimeout(timeout);
+                timeout = setTimeout(runCode, 1000);
+            });
+        });
+    </script>
+</body>
+</html>
